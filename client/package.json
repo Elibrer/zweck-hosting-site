@@ -1,0 +1,58 @@
+{
+  "name": "zweck-hosting-site",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1",
+    "web-vitals": "^2.1.4",
+    "@apollo/client": "^3.3.5",
+    "@babel/plugin-proposal-object-rest-spread": "^7.20.7",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@chakra-ui/icons": "^2.1.0",
+    "@chakra-ui/react": "^2.8.0",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@fontsource/open-sans": "^5.0.8",
+    "@fontsource/raleway": "^5.0.8",
+    "aws-sdk": "^2.1417.0",
+    "dotenv": "^16.3.1",
+    "framer-motion": "^10.15.1",
+    "graphql": "^15.4.0",
+    "jwt-decode": "^2.2.0",
+    "mongodb": "^5.7.0",
+    "morgan": "^1.10.0",
+    "react-datepicker": "^4.16.0",
+    "react-icons": "^4.10.1",
+    "react-responsive-carousel": "^3.2.23",
+    "react-router-dom": "^6.14.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
