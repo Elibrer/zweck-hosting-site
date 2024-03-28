@@ -1,14 +1,12 @@
 const { Schema, model } = require("mongoose");
+const bcrypt = require("bcrypt");
 
 const userSchema = new Schema(
   {
-    firstName: {
+    username: {
       type: String,
-      unique: false,
-    },
-    lastName: {
-      type: String,
-      unique: false,
+      required: true,
+      unique: true,
     },
     email: {
       type: String,
@@ -19,22 +17,23 @@ const userSchema = new Schema(
         "Must use a valid email address",
       ],
     },
-    country: {
+    password: {
       type: String,
-      unique: false,
+      required: true,
+      minlength: 8,
+      match: [
+        /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/,
+        "Must contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character",
+      ],
     },
-    phoneNumber: {
-      type: String,
-      match: [/^(?:\+61|0)[4578]([0-9]{8})$/, "Must use a valid phone number"],
-      unique: false,
-    },
-    enquiries: [
+    videos: [
       {
-        type: String,
-        unique: false,
+        type: Schema.Types.ObjectId,
+        ref: "Video",
       },
     ],
   },
+  // set this to use virtual below
   {
     toJSON: {
       virtuals: true,
@@ -42,9 +41,20 @@ const userSchema = new Schema(
   }
 );
 
-userSchema.virtual("enquiryCount").get(function () {
-  return this.enquiries.length;
+// hash user password
+userSchema.pre("save", async function (next) {
+  if (this.isNew || this.isModified("password")) {
+    const saltRounds = 10;
+    this.password = await bcrypt.hash(this.password, saltRounds);
+  }
+  next();
 });
+
+// custom method to compare and validate password for logging in
+userSchema.methods.isCorrectPassword = async function (password) {
+  return bcrypt.compare(password, this.password);
+};
+
 
 const User = model("User", userSchema);
 

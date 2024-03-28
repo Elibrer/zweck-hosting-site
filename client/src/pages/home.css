@@ -2,8 +2,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    animation: swirlBackground .005s infinite linear;
-
+background-color: #253237;
 }
 
 img {

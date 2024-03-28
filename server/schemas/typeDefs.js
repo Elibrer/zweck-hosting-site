@@ -3,40 +3,35 @@ const { gql } = require("apollo-server-express");
 const typeDefs = gql`
   type User {
     _id: ID
-    firstName: String
-    lastName: String
+    username: String
     email: String
-    country: String
-    phoneNumber: String
-    enquiries: [String]
+    password: String
+    videos: [Video]
   }
 
-  type Query {
-    getUsers: [User]
-    getUser(_id: ID!): User
+  type Video {
+    _id: ID
+    videoName: String
+    videoPath: String
+    user: User
   }
+
+  type Auth {
+    token: ID!
+    user: User
+  }
+
+type Query {
+  me: User
+  getUsers: [User]
+  getUsersVideos: [Video]
+}
 
   type Mutation {
-    addUser(
-      firstName: String
-      lastName: String
-      email: String
-      country: String
-      phoneNumber: String
-      enquiries: [String]
-    ): User
-
-    updateUser(
-      _id: ID
-      firstName: String
-      lastName: String
-      email: String
-      country: String
-      phoneNumber: String
-      enquiries: [String]
-    ): User
-
-    deleteUser(_id: ID!): User
+    addUser(username: String!, email: String!, password: String!): Auth
+    login(email: String!, password: String!): Auth
+    uploadVideo(videoName: String!, videoPath: String!): Video
+    checkVideo(videoName: String!): Boolean!
   }
 `;
 

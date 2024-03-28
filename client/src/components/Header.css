@@ -1,0 +1,20 @@
+.header {
+    background-color: #ffffff;
+    /* Add other styles */
+  }
+  
+  /* Header styles when fixed */
+  .header.fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    /* Add other styles */
+  }
+  
+  /* Header styles when shrunk */
+  .header.shrunk {
+    height: 80px;
+    /* Add other styles */
+  }
