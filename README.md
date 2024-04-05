@@ -80,6 +80,8 @@ For usage of this application, visit the [Zweck Hosting]() website. No further i
 ---
 
 ## Application Preview
+### `Zweck Hosting`
+![Zweck Hosting](./client/src/assets/images/zweckHosting.png)
 ### `Zweck Hosting Home`
 ![Zweck Hosting Home](./client/src/assets/images/HomePage.png)
 ### `Zweck Hosting Sign Up`

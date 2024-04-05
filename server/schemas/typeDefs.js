@@ -14,6 +14,7 @@ const typeDefs = gql`
     videoName: String
     videoPath: String
     user: User
+    dateUploaded: String
   }
 
   type Auth {
@@ -30,8 +31,9 @@ type Query {
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    uploadVideo(videoName: String!, videoPath: String!): Video
+    uploadVideo(videoName: String!, videoPath: String!, ): Video
     checkVideo(videoName: String!): Boolean!
+    deleteVideo(videoId: ID!): Video
   }
 `;
 

@@ -53,3 +53,16 @@ export const CHECK_VIDEO = gql`
   }
 `;
 
+export const DELETE_VIDEO = gql`
+  mutation DeleteVideo($videoId: ID!) {
+    deleteVideo(videoId: $videoId) {
+      _id
+      videoName
+      videoPath
+      user {
+        _id
+      }
+    }
+  }
+`;
+

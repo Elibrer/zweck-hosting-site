@@ -17,6 +17,21 @@ import {
 import { Link, useLocation } from "react-router-dom";
 
 function LoginForm() {
+  // useEffect(() => {
+  //   const handleKeyPress = (event) => {
+  //     if (event.key === "Enter") {
+  //       console.log(event)
+  //       handleFormSubmit(event);
+  //     }
+  //   };
+
+  //   document.addEventListener("keydown", handleKeyPress);
+
+  //   return () => {
+  //     document.removeEventListener("keydown", handleKeyPress);
+  //   };
+  // }, []);
+
   const location = useLocation();
 
   useEffect(() => {
@@ -45,6 +60,12 @@ function LoginForm() {
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormState({ ...formState, [name]: value });
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      handleFormSubmit(event);
+    }
   };
 
   return (
@@ -77,75 +98,74 @@ function LoginForm() {
           borderRadius={8}
           boxShadow="lg"
         >
-          <Stack
-            spacing={4}
-            p={4}
-            backgroundColor="whiteAlpha.900"
-            boxShadow="md"
-          >
-            {" "}
-            onSubmit={handleFormSubmit}
-            <FormControl id="email" mt={4}>
-              <FormLabel>Email</FormLabel>
-              <Input
-                type="email"
-                name="email"
-                placeholder="Email"
-                value={formState.email}
-                onChange={handleChange}
-              />
-            </FormControl>
-            <FormControl id="password" mt={4}>
-              <FormLabel>Password</FormLabel>
-              <Input
-                type="password"
-                name="password"
-                placeholder="Password"
-                value={formState.password}
-                onChange={handleChange}
-              />
-            </FormControl>
-            <button
-              style={{
-                backgroundColor: "#1e272a",
-                color: "#dd6b20",
-                padding: "8px 20px",
-                borderRadius: "8px",
-                cursor: "pointer",
-                fontSize: "1em",
-                letterSpacing: "2px",
-                fontWeight: "bold",
-                border: "none",
-                transition: "background-color 0.2s ease",
-              }}
-              type="submit"
-              onClick={handleFormSubmit}
+          <form onSubmit={handleFormSubmit}>
+            <Stack
+              spacing={4}
+              p={4}
+              backgroundColor="whiteAlpha.900"
+              boxShadow="md"
             >
-              Log in
-            </button>
-            {error && (
-            <Alert status="error" mt={4}>
-              <AlertIcon />
-              {error.message}
-            </Alert>
-          )}
-          <Link
-            to="/Signup"
-            style={{
-              textDecoration: "underline",
-              fontSize: "10px",
-              textAlign: "center",
-              color: "#1e272a",
-              cursor: "pointer",
-              transition: "background-color 0.2s ease",
-            }}
-            isActive={location.pathname === "/Signup"}
-          >
-            New here? Go to signup
-          </Link>
-          </Stack>
-
-          
+              {" "}
+              <FormControl id="email" mt={4}>
+                <FormLabel>Email</FormLabel>
+                <Input
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  value={formState.email}
+                  onChange={handleChange}
+                />
+              </FormControl>
+              <FormControl id="password" mt={4}>
+                <FormLabel>Password</FormLabel>
+                <Input
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  value={formState.password}
+                  onChange={handleChange}
+                />
+              </FormControl>
+              <button
+                style={{
+                  backgroundColor: "#1e272a",
+                  color: "#dd6b20",
+                  padding: "8px 20px",
+                  borderRadius: "8px",
+                  cursor: "pointer",
+                  fontSize: "1em",
+                  letterSpacing: "2px",
+                  fontWeight: "bold",
+                  border: "none",
+                  transition: "background-color 0.2s ease",
+                }}
+                type="submit"
+                onClick={handleFormSubmit}
+              >
+                Log in
+              </button>
+              {error && (
+                <Alert status="error" mt={4}>
+                  <AlertIcon />
+                  {error.message}
+                </Alert>
+              )}
+              <Link
+                to="/Signup"
+                style={{
+                  textDecoration: "underline",
+                  fontSize: "10px",
+                  textAlign: "center",
+                  color: "#1e272a",
+                  cursor: "pointer",
+                  transition: "background-color 0.2s ease",
+                }}
+                isActive={location.pathname === "/Signup"}
+              >
+                New here? Go to signup
+              </Link>
+            </Stack>
+          </form>
         </Box>
       </Flex>
     </Flex>

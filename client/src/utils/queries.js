@@ -29,6 +29,7 @@ export const GET_USERS_VIDEOS = gql`
       _id
       videoName
       videoPath
+      dateUploaded
       user {
         _id
       }

@@ -2,6 +2,9 @@ const { User, Video } = require("../models");
 const { AuthenticationError } = require("apollo-server-express");
 const { signToken } = require("../utils/auth");
 const bcrypt = require("bcrypt");
+const fs = require("fs");
+const path = require('path');
+
 
 const resolvers = {
   Query: {
@@ -34,12 +37,27 @@ const resolvers = {
   },
   Mutation: {
     addUser: async (parent, args) => {
-      console.log(args);
-      const user = await User.create(args);
-
-      const token = signToken(user);
-
-      return { token, user };
+      try {
+        const user = await User.create(args);
+        const token = signToken(user);
+        return { token, user };
+      } catch (error) {
+        if (error.name === 'ValidationError') {
+          const errorMessage = Object.values(error.errors).map(e => e.message).join(', ');
+          throw new Error(`User validation failed: ${errorMessage}`);
+        } else if (error.name === 'MongoError' && error.code === 11000) {
+          const errorMessage = error.message.toLowerCase();
+          if (errorMessage.includes('email')) {
+            throw new Error('This email is already in use');
+          } else if (errorMessage.includes('username')) {
+            throw new Error('This username is already in use');
+          } else {
+            throw new Error('Duplicate key error: Cannot determine duplicate field');
+          }
+        } else {
+          throw error;
+        }
+      }
     },
     login: async (parent, args) => {
       const user = await User.findOne({ email: args.email });
@@ -92,6 +110,25 @@ const resolvers = {
       }
       value = true;
       return value;
+    },
+    deleteVideo: async (parent, args, context) => {
+      if (context.user) {
+        const video = await Video.findByIdAndDelete({ _id: args.videoId });
+
+        const updateUser = await User.findByIdAndUpdate(
+          { _id: context.user._id },
+          { $pull: { videos: args.videoId } },
+          { new: true }
+        );
+        
+
+        const filePath = path.join(__dirname, '..', video.videoPath);
+
+        fs.unlinkSync(filePath);
+
+        return video;
+      }
+      throw new AuthenticationError("You need to be logged in!");
     },
   },
 };

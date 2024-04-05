@@ -58,13 +58,13 @@ const Header = () => {
             <Link to="/login" onClick={() => {}}>
               <NavItem
                 title="LOGIN"
-                isActive={location.pathname === "/Login"}
+                isActive={location.pathname === "/login"}
               />
             </Link>
             <Link to="/SignUp" onClick={() => {}}>
               <NavItem
                 title="SIGN UP"
-                isActive={location.pathname === "/Signup"}
+                isActive={location.pathname === "/SignUp"}
               />
             </Link>
             
@@ -83,7 +83,7 @@ const Header = () => {
           </Flex>
           <Flex width="100%" justifyContent="end" paddingRight="100px">
             <Link
-              to="/Login"
+              to="/"
               onClick={() => {
                 Auth.logout();
                 setIsLoggedIn(Auth.loggedIn());
@@ -91,7 +91,7 @@ const Header = () => {
             >
               <NavItem
                 title="LOG OUT"
-                isActive={location.pathname === "/Login"}
+                isActive={location.pathname === "/"}
               />
             </Link>
            

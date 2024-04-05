@@ -15,7 +15,7 @@ import {
 import { useMutation, useQuery } from "@apollo/client";
 import { UPLOAD_VIDEO, CHECK_VIDEO } from "../utils/mutations";
 
-const FileUploadButton = ({ onUpload, userId }) => {
+const FileUploadButton = ({ onUpload, userId, refetch }) => {
   const [uploadVideo] = useMutation(UPLOAD_VIDEO);
 
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -47,7 +47,7 @@ const FileUploadButton = ({ onUpload, userId }) => {
         } catch (error) {
           console.error("Error checking video name:", error);
         }
-        console.log("video doesnt exist yippe!");
+        console.log("Video doesn't exist within database.");
 
         const formData = new FormData();
         formData.append("video", file);
@@ -69,8 +69,6 @@ const FileUploadButton = ({ onUpload, userId }) => {
           }
         );
 
-        console.log("File uploaded successfully:");
-        console.log(response.data);
 
         try {
           const { data } = await uploadVideo({
@@ -80,9 +78,7 @@ const FileUploadButton = ({ onUpload, userId }) => {
               userID: response.data.userID,
             },
           });
-          console.log("DATATATA");
 
-          console.log(data);
         } catch (error) {
           console.error("Error uploading video to database:", error);
         }
@@ -90,7 +86,7 @@ const FileUploadButton = ({ onUpload, userId }) => {
         if (onUpload) {
           onUpload(response.data);
         }
-        setTimeout(() => window.location.reload(), 500);
+        refetch();
       } catch (error) {
         console.error("Error uploading file:", error);
         // Handle error
@@ -109,7 +105,7 @@ const FileUploadButton = ({ onUpload, userId }) => {
           onChange={handleFileChange}
         />
       </Button>
-      {uploadProgress > 0 && <Progress value={uploadProgress} />}
+      {/* {uploadProgress > 0 && <Progress value={uploadProgress} />} */}
     </div>
   );
 };

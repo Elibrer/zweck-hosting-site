@@ -131,6 +131,8 @@ function Signup() {
           borderRadius={8}
           boxShadow="lg"
         >
+                    <form onSubmit={handleFormSubmit}>
+
           <Stack
             spacing={4}
             p={4}
@@ -207,6 +209,7 @@ function Signup() {
             </Link>
             {error && <Text color="red.500">{error.message}</Text>}
           </Stack>
+          </form>
         </Box>
       </Flex>
     </Flex>

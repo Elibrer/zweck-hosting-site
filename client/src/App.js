@@ -10,11 +10,12 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 
-import Header from "./components/Header"
-import NotFound from "./pages/404"
 import Home from "./pages/Home";
+import Header from "./components/Header";
+import NotFound from "./pages/404";
+import VideoList from "./components/VideoList";
 import Signup from "./pages/SignupForm";
-import LoginForm from "./pages/LoginForm"
+import LoginForm from "./pages/LoginForm";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -48,21 +49,15 @@ function App() {
     <ApolloProvider client={client}>
       <div>
         <ChakraProvider>
-          <Flex flexDirection="column"       backgroundColor="#1e272a"
-          minH="100vh"
->
-          <Header />
+          <Flex flexDirection="column" backgroundColor="#1e272a" minH="100vh">
+            <Header />
 
             <Box flex="1" zIndex="1">
-
-            <Routes>
-              <Route path="/*" element={<NotFound />} />
-              <Route path ="/" element={<Home />} />
-              <Route path ="/Signup" element={<Signup />} />
-              <Route path ="/Login" element={<LoginForm />} />
-             
-
-              
+              <Routes>
+                <Route path="/*" element={<NotFound />} />
+                <Route path="/" element={<Home />} />
+                <Route path="/Signup" element={<Signup />} />
+                <Route path="/Login" element={<LoginForm />} />
               </Routes>
             </Box>
           </Flex>

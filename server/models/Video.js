@@ -15,6 +15,10 @@ const videoSchema = new Schema(
         type: Schema.Types.ObjectId,
         ref: 'User' // Reference to the Users model
       },
+      dateUploaded: {
+        type: Date,
+        default: Date.now,
+      },
   },
   {
     toJSON: {
