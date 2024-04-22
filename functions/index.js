@@ -13,7 +13,6 @@ const corsOptions = {
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
-app.use(cors(corsOptions));
 
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
@@ -34,6 +33,7 @@ const server = new ApolloServer({
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use('/uploads/videos', express.static(path.join(__dirname, 'uploads/videos')));
+app.use(cors(corsOptions));
 
 // Route for handling video uploads
 app.post('/api/uploadVideo', videoUpload.single('video'), (req, res) => {
