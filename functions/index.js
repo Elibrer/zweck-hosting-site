@@ -68,7 +68,7 @@ app.get("*", (req, res) => {
 });
 
 // Start Apollo Server
-onst server = new ApolloServer({
+const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: authMiddleware,
