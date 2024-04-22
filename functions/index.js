@@ -7,7 +7,13 @@ const functions = require('firebase-functions');
 
 const cors = require('cors'); // Import CORS middleware
 
+const corsOptions = {
+  origin: 'https://zweck-hosting-66142.web.app', // Your front-end app URL
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+};
 
+app.use(cors(corsOptions));
 
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
@@ -18,8 +24,12 @@ const videoUpload = require('./multerAPI/multerAPI.js');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: authMiddleware
+});
 
-app.use(cors());
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -58,18 +68,19 @@ app.get('*', (req, res) => {
 });
 
 // Start Apollo Server
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  context: authMiddleware,
-  introspection: true,
-  playground: true,
+const startApolloServer = async () => {
+  await server.start();
+  server.applyMiddleware({ app });
+};
+
+// Start MongoDB connection and then start the server
+db.once('open', () => {
+  startApolloServer();
+  app.listen(PORT, () => {
+    console.log(`🌍 Now listening on localhost:${PORT}`);
+    console.log(`Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`);
+  });
 });
 
-// Start Apollo Server and apply middleware
-server.start().then(() => {
-  server.applyMiddleware({ app, path: '/graphql' });
-});
 
-// Export the function for Firebase
 exports.api = functions.https.onRequest(app);
