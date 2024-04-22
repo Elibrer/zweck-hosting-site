@@ -21,11 +21,11 @@ const videoUpload = require("./multerAPI/multerAPI.js");
 
 const PORT = process.env.PORT || 3001;
 const app = express();
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  context: authMiddleware,
-});
+// const server = new ApolloServer({
+//   typeDefs,
+//   resolvers,
+//   context: authMiddleware,
+// });
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
