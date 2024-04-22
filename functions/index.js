@@ -77,10 +77,25 @@ const server = new ApolloServer({
 });
 
 // Start Apollo Server and apply middleware
-server.applyMiddleware({
-  app,
-  path: '/graphql', // The path for your GraphQL endpoint
-  cors: corsOptions, // The CORS options you defined
+const startApolloServer = async () => {
+  // Start the Apollo Server asynchronously
+  await server.start();
+
+  // Apply Apollo Server middleware to the Express app
+  server.applyMiddleware({
+      app,
+      path: '/graphql', // The path for your GraphQL endpoint
+      cors: corsOptions, // Apply CORS options if needed
+  });
+};
+
+// Start the MongoDB connection and then start the server
+db.once('open', () => {
+  startApolloServer();
+  app.listen(PORT, () => {
+      console.log(`🌍 Now listening on localhost:${PORT}`);
+      console.log(`Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`);
+  });
 });
 
 // Export the function for Firebase
