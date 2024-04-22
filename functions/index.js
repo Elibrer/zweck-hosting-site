@@ -18,11 +18,6 @@ const videoUpload = require('./multerAPI/multerAPI.js');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  context: authMiddleware
-});
 
 app.use(cors());
 
@@ -63,19 +58,18 @@ app.get('*', (req, res) => {
 });
 
 // Start Apollo Server
-const startApolloServer = async () => {
-  await server.start();
-  server.applyMiddleware({ app });
-};
-
-// Start MongoDB connection and then start the server
-db.once('open', () => {
-  startApolloServer();
-  app.listen(PORT, () => {
-    console.log(`🌍 Now listening on localhost:${PORT}`);
-    console.log(`Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`);
-  });
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: authMiddleware,
+  introspection: true,
+  playground: true,
 });
 
+// Start Apollo Server and apply middleware
+server.start().then(() => {
+  server.applyMiddleware({ app, path: '/graphql' });
+});
 
+// Export the function for Firebase
 exports.api = functions.https.onRequest(app);
