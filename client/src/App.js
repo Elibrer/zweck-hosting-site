@@ -18,7 +18,7 @@ import Signup from "./pages/SignupForm";
 import LoginForm from "./pages/LoginForm";
 
 const httpLink = createHttpLink({
-  uri: "/graphql",
+  uri: "https://us-central1-zweck-hosting-66142.cloudfunctions.net/api/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {
