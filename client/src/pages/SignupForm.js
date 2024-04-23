@@ -77,8 +77,6 @@ function Signup() {
     setLoggingIn(true);
 
     try {
-      console.log("DSAJHDADAGUDGLDAHJDALBJDB")
-
       const { data } = await addUser({
         variables: {
           username: formState.username,
