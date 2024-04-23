@@ -10,6 +10,8 @@ const corsOptions = {
   origin: "https://zweck-hosting-66142.web.app",
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization", "x-requested-with"],
+  credentials: true, // Allow credentials
+
 };
 
 const { typeDefs, resolvers } = require("./schemas");
@@ -26,6 +28,7 @@ const app = express();
 //   resolvers,
 //   context: authMiddleware,
 // });
+app.use(cors(corsOptions));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -33,7 +36,6 @@ app.use(
   "/uploads/videos",
   express.static(path.join(__dirname, "uploads/videos"))
 );
-app.use(cors(corsOptions));
 
 // Route for handling video uploads
 app.post("/api/uploadVideo", videoUpload.single("video"), (req, res) => {
