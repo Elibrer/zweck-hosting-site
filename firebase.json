@@ -13,6 +13,13 @@
       }
     ]
   },
+  "env": {
+    "runtime": {
+      "httpsTrigger": {
+        "securityLevel": "SECURE_ALWAYS"
+      }
+    }
+  },
   "functions": [
     {
       "source": "functions",
