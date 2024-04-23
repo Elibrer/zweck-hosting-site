@@ -77,6 +77,8 @@ function Signup() {
     setLoggingIn(true);
 
     try {
+      console.log("DSAJHDADAGUDGLDAHJDALBJDB")
+
       const { data } = await addUser({
         variables: {
           username: formState.username,
@@ -84,7 +86,9 @@ function Signup() {
           password: formState.password,
         },
       });
-
+      const token = data.addUser.token;
+      console.log(token)
+      Auth.login(token);
       handleToast();
       setTimeout(() => {
         Auth.login(data.addUser.token);

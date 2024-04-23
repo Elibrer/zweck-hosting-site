@@ -38,8 +38,13 @@ const resolvers = {
   Mutation: {
     addUser: async (parent, args) => {
       try {
+
+        console.log("AHDSDJAHDAKDAVSDASDGADG")
         const user = await User.create(args);
+
+
         const token = signToken(user);
+
         return { token, user };
       } catch (error) {
         if (error.name === 'ValidationError') {
